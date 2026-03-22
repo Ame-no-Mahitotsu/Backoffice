@@ -4,6 +4,15 @@ Chronological journal of the SitoPresepi2 project. Append-only — corrections a
 **ID format:** `EXP-NNN` (sequential)
 **Labels:** see `glossary.md` for the full label vocabulary
 
+> **Note:** Paths in entries prior to EXP-007 reflect the pre-reorg layout (`SitoPresepi2/` monorepo). From EXP-007 onward the workspace uses the multi-repo layout.
+
+---
+
+## [EXP-007] 2026-03-22 — Workspace Reorganisation: Monorepo to Multi-Repo
+labels: #landmark #devops #governance
+
+The `SitoPresepi2/` monorepo was split into five dedicated repositories to enforce separation of concerns: **hephestus** (governance: constitution, memory, agent files, Claude commands), **development/tools** (PM tooling: pm/ package, ticket.py, pm.db), **docs** (project documentation), **backoffice** (operational records: sessions, meetings, gate output, ceremonies), **development/presepi-site** (site code). A VS Code multi-root workspace (`hephestus.code-workspace`) wires all four folders into a single editor window. The old monorepo is archived at `SitoPresepi2-archive/` and retained for git history. Bare repo `repos/SitoPresepi2-pm.git` retained until GitHub history is confirmed healthy. Sprint: reorg-1. Tickets: ISS-129 through ISS-141.
+
 ---
 
 ## [EXP-001] 2026-03-11 — Constitutional Foundations
