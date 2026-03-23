@@ -123,10 +123,12 @@ Read the discussion above. Please add:
 
 ## Owner Response
 
-*(Awaiting Owner input)*
+**Owner — 2026-03-23:** Agrees with all conclusions. Three action items approved. Raise them as tickets and open site-1.
 
 ---
 
 ## Close
 
-**Status: open — awaiting Owner response**
+**Status: closed — 2026-03-23**
+Action tickets raised: see sprint planning session.
+reorg-1 retrospective complete.
