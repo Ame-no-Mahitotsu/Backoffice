@@ -18,14 +18,18 @@ Read your full role definition at: `hephestus/.github/agents/team-leader.agent.m
 
 | Item | Value |
 |---|---|
-| Site working directory | `C:\temp\ClaudeProjects\development\presepi-site` |
+| Bea desk workspace | `C:\temp\ClaudeProjects\Office\Bea-Desk\Bea-Desk.code-workspace` |
+| Claire desk (presepi-site) | `C:\temp\ClaudeProjects\Office\Claire-Desk\presepi-site\` |
+| Ash desk (presepi-site) | `C:\temp\ClaudeProjects\Office\Ash-Desk\presepi-site\` |
+| Helios desk (presepi-site) | `C:\temp\ClaudeProjects\Office\Helios-Desk\presepi-site\` |
+| Martina desk (docs) | `C:\temp\ClaudeProjects\Office\Martina-Desk\docs\` |
 | Site base branch | `develop` |
 | venv (tools) | `source C:/temp/ClaudeProjects/development/tools/.venv/Scripts/activate` |
 | Python version | 3.14.3 |
-| Django root | `C:\temp\ClaudeProjects\development\presepi-site\django\` |
 | ticket.py | `C:\temp\ClaudeProjects\development\tools\ticket.py` |
-| Run tests | `docker compose --profile test run --rm test` (from presepi-site root) |
-| Desk workspace | `C:\temp\ClaudeProjects\Office\Bea-Desk\Bea-Desk.code-workspace` |
+| Run tests | `docker compose --profile test run --rm test` (from agent's presepi-site desk clone) |
+
+Each agent works from their own desk clone — no worktrees needed. All agents pull `develop` at session start before branching.
 
 ---
 
@@ -65,31 +69,31 @@ Wave 3 — BLOCKED (start after Wave 2):
   ISS-114  Frontend: contact page                        → Ash       (after ISS-113 in-testing)
 ```
 
-**Claire sequencing:** She has three tickets (171 → 170 → 113). Run sequentially. Start with the trivial security fix (171), then the larger security refactor (170), then the API (113). Each gets its own worktree.
+**Claire sequencing:** She has three tickets (171 → 170 → 113). Run sequentially in her desk clone. Start with the trivial security fix (171), then the larger security refactor (170), then the API (113). Each gets its own feature branch — merge each to `develop` before starting the next.
 
-**Helios and Martina** work independently in their own desk clones — no worktrees needed (no code, no migrations).
+**Helios, Martina, and Ash** work independently in their own desk clones.
 
 ---
 
-## Worktree Setup — Claire
+## Branch Setup — Claire
 
-Each ticket gets an isolated git worktree. Create only when ready to start that ticket.
+Claire works in her desk clone. One feature branch per ticket, created from `develop`. Merge each before starting the next.
 
 ```bash
+# At session start — pull develop first
+cd C:/temp/ClaudeProjects/Office/Claire-Desk/presepi-site
+git checkout develop && git pull origin develop
+
 # ISS-171 (start first)
-cd C:/temp/ClaudeProjects/development/presepi-site
-git worktree add ../presepi-site-iss-171 -b feature/iss-171-remove-gif-allowlist develop
+git checkout -b feature/iss-171-remove-gif-allowlist
 
-# ISS-170 (after ISS-171 merged)
-git worktree add ../presepi-site-iss-170 -b feature/iss-170-mime-derived-extension develop
+# ISS-170 (after ISS-171 merged to develop)
+git checkout develop && git pull origin develop
+git checkout -b feature/iss-170-mime-derived-extension
 
-# ISS-113 (after ISS-170 merged)
-git worktree add ../presepi-site-iss-113 -b feature/iss-113-contact-api develop
-```
-
-Remove each worktree after its branch is merged to develop:
-```bash
-git worktree remove ../presepi-site-iss-NNN
+# ISS-113 (after ISS-170 merged to develop)
+git checkout develop && git pull origin develop
+git checkout -b feature/iss-113-contact-api
 ```
 
 ---
