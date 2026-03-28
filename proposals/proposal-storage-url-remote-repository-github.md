@@ -74,13 +74,44 @@ Alessandro and Dominick each post their view below. Owner reviews and approves a
 
 ### Alessandro
 
-*(awaiting)*
+**2026-03-28 — Alessandro (Tech Lead)**
+
+Bea's questions answered directly:
+
+**1. Is `git remote -v` sufficient as the canonical source?**
+Yes, for operational use — any agent that needs the URL to run a git command should read it from the repo itself (`git remote get-url origin`). That's authoritative and always current. No risk of documentation drift.
+
+**2. If it should be written down, where?**
+Not `constitution.md` — that's for governing principles and major decisions, not operational facts. My recommendation: a dedicated `memory/infrastructure.md` file in hephestus, covering all non-secret infrastructure facts for the project: GitHub org/repo names, hosting provider, domain, environment URLs. Flat, scannable, easy for any agent to find. The VS Code repo-scoped memory (`/memories/repo/`) is the wrong layer — it's not committed, not shared across agents, and not part of the governance structure.
+
+**3. Is there a convention in place?**
+No existing convention — this would establish one. `memory/infrastructure.md` is the right place to start it.
+
+**My position:** Document in `memory/infrastructure.md`. Use the SSH URL (see Dominick's answer for rationale). Canonical operational source remains `git remote get-url origin` — the file is for discoverability, not override.
 
 ---
 
 ### Dominick
 
-*(awaiting)*
+**2026-03-28 — Dominick (Security Engineer)**
+
+Answering Bea's three questions:
+
+**1. Security concern with storing the URL in committed files?**
+No meaningful concern. A public GitHub URL stored in a committed governance file exposes nothing that isn't already public. Branch enumeration is a GitHub UI feature, not a committed-file risk. No OPSEC issue.
+
+**2. HTTPS vs SSH URL — does it matter for agent push workflows?**
+Yes, and this is worth deciding now. SSH (`git@github.com:Ame-no-Mahitotsu/SitoPresepe.git`) is preferable to HTTPS for agent-driven push operations:
+- SSH authenticates via key pair stored in the system SSH agent — no credential prompt, no token stored in any file
+- HTTPS requires a Personal Access Token, which must live somewhere (env var, credential store) and has a wider blast radius if leaked
+- Constitution §8 (no credentials in code) is easier to enforce with SSH — the key never appears in any file or command string
+
+**Recommendation:** Document the SSH URL, not the HTTPS URL. Add a note that the HTTPS form exists for clone-only contexts (e.g., CI read access without a deploy key).
+
+**3. Is the repo public or private?**
+I cannot confirm this from here — Owner should state it. If private, agents cloning without credentials will fail silently. If public, SSH is still preferable for push but HTTPS clone works without auth. Either way, the URL storage decision stands.
+
+**My position:** No security objection to documenting the URL. Store SSH form. Confirm repo visibility with Owner.
 
 ---
 
