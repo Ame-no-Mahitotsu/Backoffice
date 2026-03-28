@@ -1,7 +1,7 @@
 # Proposal: Storage of GitHub Remote Repository URL
 **Author:** Bea (Team Leader)
 **Date:** 2026-03-24
-**Status:** Open — awaiting input from Alessandro and Dominick before any decision
+**Status:** Closed — Owner decision recorded 2026-03-28
 
 ---
 
@@ -117,4 +117,11 @@ I cannot confirm this from here — Owner should state it. If private, agents cl
 
 ### Owner decision
 
-*(awaiting)*
+**2026-03-28 — Owner**
+
+1. Repo is **private**.
+2. `memory/infrastructure.md` in hephestus approved as the home for non-secret infrastructure facts.
+3. SSH URL is the documented form. Alessandro and Dominick's recommendations accepted.
+
+Implemented: `hephestus/memory/infrastructure.md` created covering all 5 repos, local layout, and hosting facts.
+Open follow-up: `development/presepi-site` currently uses HTTPS remote — switching to SSH is pending a separate Owner decision.
